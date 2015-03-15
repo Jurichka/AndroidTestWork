@@ -1,17 +1,46 @@
 package com.example.jurgen.androidtestworkas;
 
+import android.content.Context;
+import android.media.Image;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.ListView;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
-
+    private List<FootballTeam> list;
+    private ListView listView;
+    private Context context = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        int i = R.drawable.arsenal;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        listView=(ListView) findViewById(R.id.listView);
+        FootballTeamAdapter adapter = new FootballTeamAdapter(context, initData());
+        listView.setAdapter(adapter);
+
+    }
+
+    private List<FootballTeam> initData() {
+
+        list = new ArrayList<FootballTeam>();
+
+        list.add(new FootballTeam(R.drawable.arsenal,1,"Arcenal"));
+        list.add(new FootballTeam(R.drawable.chelsea,2,"Chelsea"));
+        list.add(new FootballTeam(R.drawable.juventus,3,"Juventus"));
+        list.add(new FootballTeam(R.drawable.realmadrid,4,"Real Madrid"));
+
+
+        return list;
+
     }
 
 
