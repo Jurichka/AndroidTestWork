@@ -43,8 +43,9 @@ public class FootballTeamAdapter extends BaseAdapter {
         }
         ImageView img = (ImageView) view.findViewById(R.id.imgView);
         TextView text = (TextView)view.findViewById(R.id.textView);
+
         img.setImageResource(ft.getImgId());
-        text.setText(ft.getName());
+        text.setText(ft.getId()+". "+ft.getName());
         return view;
     }
     private FootballTeam getFT(int position) {
