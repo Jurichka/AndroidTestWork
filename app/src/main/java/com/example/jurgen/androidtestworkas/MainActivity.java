@@ -1,16 +1,13 @@
 package com.example.jurgen.androidtestworkas;
 
-import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,10 +18,9 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
     private boolean chek;
-    private final DBhelper db = new DBhelper(this);
     private final int G1=0;
     private final int G2=1;
-    private List<FootballTeam> list;
+    private List<FootballTeamDaten> list;
     private ListView listView;
     private final String TAG="TAG";
     @Override
@@ -37,12 +33,12 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         listView.setAdapter(adapter);
 
     }
-    private List<FootballTeam> initData() {
-        list = new ArrayList<FootballTeam>();
-        list.add(new FootballTeam(R.drawable.arsenal,1,"Arcenal"));
-        list.add(new FootballTeam(R.drawable.chelsea,2,"Chelsea"));
-        list.add(new FootballTeam(R.drawable.juventus,3,"Juventus"));
-        list.add(new FootballTeam(R.drawable.realmadrid,4,"Real Madrid"));
+    private List<FootballTeamDaten> initData() {
+        list = new ArrayList<FootballTeamDaten>();
+        list.add(new FootballTeamDaten(R.drawable.arsenal,1,"Arcenal"));
+        list.add(new FootballTeamDaten(R.drawable.chelsea,2,"Chelsea"));
+        list.add(new FootballTeamDaten(R.drawable.juventus,3,"Juventus"));
+        list.add(new FootballTeamDaten(R.drawable.realmadrid,4,"Real Madrid"));
         return list;
     }
     @Override
@@ -65,23 +61,31 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        StringBuilder sb= new StringBuilder();
         switch (item.getItemId()){
             case R.id.item2:
                 if(item.isChecked()==true){
                    item.setChecked(false);
                    chek=false;
-                }else{item.setChecked(true);
+                }else
+                    {
+                    item.setChecked(true);
                     chek=true; }
                 return true;
+            case 2:
+                Intent intent = new Intent(this,NewTeam.class);
+                startActivity(intent);
+                 break;
         }
         return super.onContextItemSelected(item);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        FootballTeam ft=list.get(position);
+        FootballTeamDaten ft=list.get(position);
         String s=String.valueOf(id);
         Log.d(TAG,s);
         Toast.makeText(this,ft.getName(),Toast.LENGTH_SHORT).show();
     }
+
 }

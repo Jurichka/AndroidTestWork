@@ -11,9 +11,9 @@ import android.widget.TextView;
 import java.util.List;
 
 public class FootballTeamAdapter extends BaseAdapter {
-    List<FootballTeam> list;
+    List<FootballTeamDaten> list;
     private LayoutInflater inflaters;
-    public FootballTeamAdapter(Context context,List<FootballTeam> list) {
+    public FootballTeamAdapter(Context context,List<FootballTeamDaten> list) {
         this.list=list;
         inflaters = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -36,11 +36,12 @@ public class FootballTeamAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
-        FootballTeam ft = getFT(position);
+        FootballTeamDaten ft = getFT(position);
         if (view == null) {
             int v = R.layout.item_layout;
             view = inflaters.inflate(v, parent, false);
         }
+
         ImageView img = (ImageView) view.findViewById(R.id.imgView);
         TextView text = (TextView)view.findViewById(R.id.textView);
 
@@ -48,7 +49,8 @@ public class FootballTeamAdapter extends BaseAdapter {
         text.setText(ft.getId()+". "+ft.getName());
         return view;
     }
-    private FootballTeam getFT(int position) {
-        return (FootballTeam) getItem(position);
+    private FootballTeamDaten getFT(int position) {
+
+        return (FootballTeamDaten) getItem(position);
     }
 }

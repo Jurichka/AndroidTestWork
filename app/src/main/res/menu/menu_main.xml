@@ -6,7 +6,6 @@
         android:orderInCategory="100" app:showAsAction="never" />
         -->
     <item android:id="@+id/item2"
-
         android:title="Dop"
-         android:checkable="true" />
+        android:checkable="true" />
 </menu>
