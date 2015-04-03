@@ -1,6 +1,9 @@
 package com.example.jurgen.androidtestworkas;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,9 +47,17 @@ public class FootballTeamAdapter extends BaseAdapter {
 
         ImageView img = (ImageView) view.findViewById(R.id.imgView);
         TextView text = (TextView)view.findViewById(R.id.textView);
-
-        img.setImageResource(ft.getImgId());
+        if(ft.getImgId()==0){
+            Bitmap image= BitmapFactory.decodeFile(ft.getPath()) ;
+          //  image = Bitmap.createScaledBitmap(image, 200, 200, true);
+        img.setImageBitmap(image);
         text.setText(ft.getId()+". "+ft.getName());
+    }else {
+            img.setImageResource(ft.getImgId());
+            text.setText(ft.getId() + ". " + ft.getName());
+        }
+
+
         return view;
     }
     private FootballTeamDaten getFT(int position) {

@@ -9,12 +9,15 @@ public class FootballTeamDaten {
     private int imgId;
     private int id;
     private String name;
+    private String path;
 
-    public FootballTeamDaten(int imgId, int id, String name) {
 
+
+    public FootballTeamDaten(int imgId, int id, String name,String path) {
         this.imgId=imgId;
         this.id = id;
         this.name = name;
+        this.path = path;
     }
     public int getImgId() {
         return imgId;
@@ -39,6 +42,12 @@ public class FootballTeamDaten {
     public void setName(String name) {
         this.name = name;
     }
+    public String getPath() {
+        return path;
+    }
 
+    public void setPath(String path) {
+        this.path = path;
+    }
 
 }

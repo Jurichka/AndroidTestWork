@@ -21,31 +21,40 @@
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="wrap_content"
             android:inputType="textMultiLine"
 
             android:id="@+id/URL"
-            android:maxLines="10"
+            android:maxLines="3"
            />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal">
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="Download"
-                android:id="@+id/button2" />
+                android:id="@+id/button2"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/ripple"
+                />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Add image"
+                android:id="@+id/button3"
                 android:layout_weight="1"
-                android:text="Add"
-                android:id="@+id/button3" />
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/ripple"
+                 />
         </LinearLayout>
 
     </LinearLayout>
@@ -55,20 +64,21 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Название команди:"
-        android:id="@+id/textView4"
-        android:paddingTop="15dp" />
+        android:layout_marginTop="10dp"
+        android:id="@+id/textView4" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txtNameNewTeam"
-
         android:inputType="text" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Сохранить"
-        android:id="@+id/button" />
+        android:text="Save"
+        android:id="@+id/button"
+        android:background="@drawable/ripple"
+        />
 
 </LinearLayout>

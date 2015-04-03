@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_horizontal">
@@ -14,11 +14,66 @@
         android:textSize="26dp"
         android:textStyle="bold"
         android:id="@+id/txtMain"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <ListView
+        />
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView" />
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView" />
+        android:id="@+id/multiple_actions"
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom|right"
+        fab:fab_addButtonStrokeVisible="true"
+        fab:fab_addButtonColorNormal="@color/primary"
+        fab:fab_addButtonColorPressed="@color/pressed"
+        fab:fab_addButtonPlusIconColor="#ffffffff"
+        fab:fab_labelStyle="@style/menu_lables_style"
+        >
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/multiple_button1"
+            android:onClick="addNewTeam"
+            fab:fab_icon="@drawable/newfile"
+            fab:fab_colorNormal="#ffe98429"
+            fab:fab_colorPressed="#ffe9e4e8"
+            fab:fab_size="mini"
+            fab:fab_title="Add new team"
+            >
+        </com.getbase.floatingactionbutton.FloatingActionButton>
+
+      <!--  <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/multiple_button2"
+
+            fab:fab_icon="@drawable/delete"
+            fab:fab_colorNormal="#e92e63"
+            fab:fab_colorPressed="#ffe9e4e8"
+            fab:fab_title="Info"
+            fab:fab_size="mini"
+            >
+        </com.getbase.floatingactionbutton.FloatingActionButton> -->
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/multiple_button3"
+            fab:fab_icon="@drawable/trash"
+            fab:fab_colorNormal="#e92e63"
+            fab:fab_colorPressed="#ffe9e4e8"
+            fab:fab_title="Delete all"
+            fab:fab_size="mini"
+            >
+
+        </com.getbase.floatingactionbutton.FloatingActionButton>
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+ </FrameLayout>
+
 </LinearLayout>

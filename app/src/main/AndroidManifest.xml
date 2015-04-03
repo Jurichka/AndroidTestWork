@@ -20,9 +20,10 @@
         </activity>
         <activity android:name=".NewTeam"
                   android:label="NewTeam">
-
-
-            </activity>
+        </activity>
+        <activity android:name=".ClubInfo"
+            android:label="ClubInfo">
+        </activity>
         <provider android:name="MyContactsProvider" android:authorities="com.example.jurgen.androidworkas"></provider>
     </application>
 

@@ -1,7 +1,10 @@
 package com.example.jurgen.androidtestworkas;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -10,12 +13,16 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.DialogPreference;
 import android.provider.MediaStore;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.commons.io.FilenameUtils;
@@ -35,6 +42,7 @@ public class NewTeam extends Activity implements View.OnClickListener {
     private EditText txtNameNewTeam,txtURL;
     private Bitmap image;
     private Button btnSave,btnAdd,btnDownload;
+    private View view;
     private int newWidth = 200;
     private int newHeight = 200;
     private static final int SELECT_PICTURE = 1;
@@ -57,6 +65,7 @@ public class NewTeam extends Activity implements View.OnClickListener {
         txtNameNewTeam=(EditText)findViewById(R.id.txtNameNewTeam);
         txtURL=(EditText)findViewById(R.id.URL);
         image= BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcherr) ;
+
         image = Bitmap.createScaledBitmap(image, newHeight, newWidth, true);
         img.setImageBitmap(image);
 
@@ -86,9 +95,35 @@ public class NewTeam extends Activity implements View.OnClickListener {
                     }
                 break;
         case R.id.button2:
-            String url = txtURL.getText().toString();
-            new DownloadImage().execute(url);
-            break;
+            if(txtURL.getText().toString()!=""){
+                String url = txtURL.getText().toString();
+                new DownloadImage().execute(url);
+                try{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setCancelable(false)
+                            .setTitle("Download")
+//                      .setMessage("Progress")
+                            .setIcon(android.R.drawable.ic_dialog_info);
+                    view= getLayoutInflater().inflate(R.layout.progressbar,null);
+                    builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                           //finish();
+                        }
+                    });
+                    builder.setView(view);
+                    builder.create();
+                    builder.show();
+                    //openOptionsMenu();
+                    break;}
+                catch (Exception e){
+                    Log.d("TAG",""+e.toString());
+                }
+            }else{
+                Toast.makeText(this,"EROR бля",Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 
@@ -118,22 +153,22 @@ public class NewTeam extends Activity implements View.OnClickListener {
         else return null;
     }
 
-    @Override
-    protected void onDestroy() {
-        Cursor c = getContentResolver().query(TEAM_URI, null, null, null, null);
-        if (c.moveToFirst()) {
-            do {
-                Log.d("TAG",
-                        "ID: " + c.getInt(c.getColumnIndex("_id")) + " Img: "
-                                + c.getString(c.getColumnIndex("_logo")) + " Name: "
-                                + c.getString(c.getColumnIndex("_name")));
-
-            } while (c.moveToNext());
-        } else {
-            Log.d("TAG", "Пустая таблица!");
-        }
-        super.onDestroy();
-    }
+//    @Override
+//    protected void onDestroy() {
+//        Cursor c = getContentResolver().query(TEAM_URI, null, null, null, null);
+//        if (c.moveToFirst()) {
+//            do {
+//                Log.d("TAG",
+//                        "ID: " + c.getInt(c.getColumnIndex("_id")) + " Img: "
+//                                + c.getString(c.getColumnIndex("_logo")) + " Name: "
+//                                + c.getString(c.getColumnIndex("_name")));
+//
+//            } while (c.moveToNext());
+//        } else {
+//            Log.d("TAG", "Пустая таблица!");
+//        }
+//        super.onDestroy();
+//    }
     class DownloadImage extends AsyncTask<String, String, Void> {
         public int progress=0;
 
@@ -147,11 +182,12 @@ public class NewTeam extends Activity implements View.OnClickListener {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+
             Toast.makeText(getApplicationContext(), "Завершено", Toast.LENGTH_LONG)
                     .show();
-            image= BitmapFactory.decodeFile("/mnt/sdcard/A_TEST/"+fname) ;
+            image= BitmapFactory.decodeFile("/mnt/sdcard/Download/"+fname) ;
             image = Bitmap.createScaledBitmap(image, newHeight, newWidth, true);
-            selectedImagePath="/mnt/sdcard/A_TEST/"+fname;
+            selectedImagePath="/mnt/sdcard/Download/"+fname;
             img.setImageBitmap(image);
         }
 
@@ -159,24 +195,15 @@ public class NewTeam extends Activity implements View.OnClickListener {
             int myNum=0;
             try {
                 myNum = java.lang.Integer.parseInt(values[0]);
-//                MainActivity.txt.setText(""+myNum+"%");
-//                MainActivity.progres.setProgress(myNum);
+                  ProgressBar pb=(ProgressBar)view.findViewById(R.id.progressBar);
+                TextView txt=(TextView)view.findViewById(R.id.textView2);
+                    txt.setText(" "+myNum+"%");
+                    pb.setProgress(myNum);
             } catch(NumberFormatException nfe) {
                 System.out.println("Could not parse " + nfe);
             }
 
         }
-
-
-//        private String setFileName() {
-//            Date date = new Date();
-//
-//            String s = String.valueOf(date.getHours())
-//                    + String.valueOf(date.getMinutes())
-//                    + String.valueOf(date.getSeconds());
-//            return s;
-//        }
-
         protected Void doInBackground(String... arg0) {
             try {
                 URL url = new URL(arg0[0]);
@@ -185,20 +212,20 @@ public class NewTeam extends Activity implements View.OnClickListener {
                 Log.d("TAG",baseName+"------"+extension);
 			/* making a directory in sdcard */
 
-                String sdCard = Environment.getExternalStorageDirectory()
-                        .toString();
-                File myDir = new File(sdCard, "A_TEST");
+//                String sdCard = Environment.getExternalStorageDirectory()
+//                        .toString();
+//                File myDir = new File("/mnt/sdcard/Download/", "A_TEST");
 
 			/* if specified not exist create new */
-                if (!myDir.exists()) {
-                    myDir.mkdir();
-
-                    Log.w("", "inside mkdir");
-                }
+//                if (!myDir.exists()) {
+//                    myDir.mkdir();
+//
+//                    Log.w("", "inside mkdir");
+//                }
 
 			/* checks the file and if it already exist delete */
                 fname =baseName+"."+extension;
-                File file = new File(myDir, fname);
+                File file = new File("/mnt/sdcard/Download/", fname);
                 if (file.exists())
                     file.delete();
 
@@ -243,4 +270,5 @@ public class NewTeam extends Activity implements View.OnClickListener {
             return null;
         }
     }
+
 }
