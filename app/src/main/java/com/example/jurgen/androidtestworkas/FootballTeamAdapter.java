@@ -47,11 +47,11 @@ public class FootballTeamAdapter extends BaseAdapter {
 
         ImageView img = (ImageView) view.findViewById(R.id.imgView);
         TextView text = (TextView)view.findViewById(R.id.textView);
-        if(ft.getImgId()==0){
+        if(ft.getId()>4){
             Bitmap image= BitmapFactory.decodeFile(ft.getPath()) ;
           //  image = Bitmap.createScaledBitmap(image, 200, 200, true);
-        img.setImageBitmap(image);
-        text.setText(ft.getId()+". "+ft.getName());
+            img.setImageBitmap(image);
+            text.setText(ft.getId()+". "+ft.getName());
     }else {
             img.setImageResource(ft.getImgId());
             text.setText(ft.getId() + ". " + ft.getName());

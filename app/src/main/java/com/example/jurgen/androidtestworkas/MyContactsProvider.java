@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 
 public class MyContactsProvider extends ContentProvider{
@@ -40,13 +41,13 @@ public class MyContactsProvider extends ContentProvider{
     // общий Uri
     static final int URI_TEAM = 1;
     // Uri с указанным ID
-//    static final int URI_CONTACTS_ID = 2;
+    static final int URI_TEAM_ID = 2;
     // описание и создание UriMatcher
     private static final UriMatcher uriMatcher;
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(AUTHORITY, CONTACT_PATH, URI_TEAM);
-//        uriMatcher.addURI(AUTHORITY, CONTACT_PATH + "/#", URI_CONTACTS_ID);
+        uriMatcher.addURI(AUTHORITY, CONTACT_PATH + "/#", URI_TEAM_ID);
     }
     DBHelper dbHelper;
     SQLiteDatabase db;
@@ -75,8 +76,8 @@ public class MyContactsProvider extends ContentProvider{
             case URI_TEAM:
                 Log.d(LOG_TAG, "insert, " + TEAM_CONTENT_TYPE);
                 return TEAM_CONTENT_TYPE;
-//            case URI_CONTACTS_ID:
-//                return CONTACT_CONTENT_ITEM_TYPE;
+            case URI_TEAM_ID:
+                return CONTACT_CONTENT_ITEM_TYPE;
         }
         return null;
 
@@ -85,10 +86,10 @@ public class MyContactsProvider extends ContentProvider{
     @Override
     public Uri insert (Uri uri, ContentValues values) {
 
-        Log.d(LOG_TAG, "insert, " + uri.toString());
+
          if (uriMatcher.match(uri) != URI_TEAM)
             throw new IllegalArgumentException("Wrong URI: " + uri+"=/="+URI_TEAM);
-
+        Log.d(LOG_TAG, "insert, " + uri.toString());
         db = dbHelper.getWritableDatabase();
         long rowID = db.insert(TABLE_TEAM, null, values);
         Uri resultUri = ContentUris.withAppendedId(TEAM_CONTENT_URI, rowID);
@@ -101,7 +102,27 @@ public class MyContactsProvider extends ContentProvider{
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+        Log.d(LOG_TAG, "delete, " + uri.toString());
+        switch (uriMatcher.match(uri)) {
+            case URI_TEAM:
+                Log.d(LOG_TAG, "URI_CONTACTS");
+                break;
+            case URI_TEAM_ID:
+                String id = uri.getLastPathSegment();
+                Log.d(LOG_TAG, "URI_CONTACTS_ID, " + id);
+                if (TextUtils.isEmpty(selection)) {
+                    selection = KEY_ID + " = " + id;
+                } else {
+                    selection = selection + " AND " + KEY_ID + " = " + id;
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Wrong URI: " + uri);
+        }
+        db = dbHelper.getWritableDatabase();
+        int cnt = db.delete(TABLE_TEAM, selection, selectionArgs);
+        getContext().getContentResolver().notifyChange(uri, null);
+        return cnt;
     }
 
     @Override

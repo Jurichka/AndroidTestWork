@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.text.Layout;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -65,8 +66,7 @@ public class NewTeam extends Activity implements View.OnClickListener {
         txtNameNewTeam=(EditText)findViewById(R.id.txtNameNewTeam);
         txtURL=(EditText)findViewById(R.id.URL);
         image= BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcherr) ;
-
-        image = Bitmap.createScaledBitmap(image, newHeight, newWidth, true);
+        image = Bitmap.createScaledBitmap(image, newHeight,newWidth, true);
         img.setImageBitmap(image);
 
     }
@@ -121,7 +121,7 @@ public class NewTeam extends Activity implements View.OnClickListener {
                     Log.d("TAG",""+e.toString());
                 }
             }else{
-                Toast.makeText(this,"EROR бля",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"ERROR бля",Toast.LENGTH_SHORT).show();
             }
 
         }

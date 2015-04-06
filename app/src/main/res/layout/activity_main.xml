@@ -64,6 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/multiple_button3"
+            android:onClick="ubdateListView"
             fab:fab_icon="@drawable/trash"
             fab:fab_colorNormal="#e92e63"
             fab:fab_colorPressed="#ffe9e4e8"

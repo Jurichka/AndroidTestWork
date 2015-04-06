@@ -2,12 +2,18 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
         <!-- Customize your theme here. -->
     </style>
+    <style name="AppThemeAppCompat" parent="Theme.AppCompat">
+
+    </style>
+
     <color name="primary">#ff2b67ff</color>
     <color name="pressed">#ff8961ff</color>
     <style name="menu_lables_style">
         <item name="android:background">@drawable/fab_lable_backgrounf</item>
         <item name="android:textColor">#fafafa</item>
     </style>
+
 </resources>

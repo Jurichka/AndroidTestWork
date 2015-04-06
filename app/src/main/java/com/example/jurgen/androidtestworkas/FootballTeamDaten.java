@@ -13,8 +13,13 @@ public class FootballTeamDaten {
 
 
 
-    public FootballTeamDaten(int imgId, int id, String name,String path) {
+    public FootballTeamDaten(int imgId, int id, String name) {
         this.imgId=imgId;
+        this.id = id;
+        this.name = name;
+    }
+    public FootballTeamDaten(int idBD, int id, String name,String path) {
+        imgId=idBD;
         this.id = id;
         this.name = name;
         this.path = path;
