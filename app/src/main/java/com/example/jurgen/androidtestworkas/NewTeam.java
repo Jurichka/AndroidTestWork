@@ -153,22 +153,6 @@ public class NewTeam extends Activity implements View.OnClickListener {
         else return null;
     }
 
-//    @Override
-//    protected void onDestroy() {
-//        Cursor c = getContentResolver().query(TEAM_URI, null, null, null, null);
-//        if (c.moveToFirst()) {
-//            do {
-//                Log.d("TAG",
-//                        "ID: " + c.getInt(c.getColumnIndex("_id")) + " Img: "
-//                                + c.getString(c.getColumnIndex("_logo")) + " Name: "
-//                                + c.getString(c.getColumnIndex("_name")));
-//
-//            } while (c.moveToNext());
-//        } else {
-//            Log.d("TAG", "Пустая таблица!");
-//        }
-//        super.onDestroy();
-//    }
     class DownloadImage extends AsyncTask<String, String, Void> {
         public int progress=0;
 

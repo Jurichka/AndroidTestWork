@@ -28,7 +28,7 @@
                   android:theme="@android:style/Theme.Holo.Light"
                   android:icon="@mipmap/ic_action_ball"
          />
-        <provider android:name="MyContactsProvider" android:authorities="com.example.jurgen.androidworkas"></provider>
+        <provider android:name=".MyContentProvider" android:authorities="com.example.jurgen.androidworkas"></provider>
     </application>
 
 </manifest>

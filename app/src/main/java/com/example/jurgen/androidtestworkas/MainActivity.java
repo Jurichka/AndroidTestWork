@@ -83,7 +83,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 0:
-                Toast.makeText(this, "Jurichka", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Jakob test app", Toast.LENGTH_SHORT).show();
                 break;
             case 1:
                 finish();
